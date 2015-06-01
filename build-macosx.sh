@@ -16,7 +16,7 @@ rm -rf build
 mkdir build
 cd build
 
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -DCMAKE_BUILD_TYPE=Release -Dgtest_build_tests=OFF ..
 make -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
@@ -33,4 +33,3 @@ mkdir -p $LIB_DIR
 mv *.a $LIB_DIR
 
 echo "DONE!"
-ls -1 ${LIB_DIR}/*.a

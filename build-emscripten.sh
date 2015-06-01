@@ -6,6 +6,8 @@ if [ ! -d dist ]; then
   exit 1
 fi
 
+HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
+
 # ---
 
 cd dist
@@ -14,8 +16,8 @@ rm -rf build
 mkdir build
 cd build
 
-emcmake cmake -Dgtest_disable_pthreads=ON -DCMAKE_BUILD_TYPE=Release ..
-emmake make
+emcmake cmake -DCMAKE_BUILD_TYPE=Release -Dgtest_disable_pthreads=ON -Dgtest_build_tests=OFF ..
+emmake make -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
   echo "MAKE FAILED!"
@@ -32,4 +34,3 @@ mkdir -p $LIB_DIR
 mv *.a $LIB_DIR
 
 echo "DONE!"
-ls -1 ${LIB_DIR}/*.a

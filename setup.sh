@@ -1,12 +1,8 @@
 #!/bin/sh
 
-GTEST_VER1=1
-GTEST_VER2=7
-GTEST_VER3=0
-
-GTEST_DIR="gtest-${GTEST_VER1}.${GTEST_VER2}.${GTEST_VER3}"
-GTEST_ZIP="gtest-${GTEST_VER1}.${GTEST_VER2}.${GTEST_VER3}.zip"
-GTEST_SRC="http://googletest.googlecode.com/files/${GTEST_ZIP}"
+GTEST_DIR="googletest-emscripten"
+GTEST_ZIP="emscripten.zip"
+GTEST_SRC="https://github.com/arielm/googletest/archive/${GTEST_ZIP}"
 
 rm -rf dist
 
