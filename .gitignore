@@ -1,0 +1,7 @@
+dist/
+lib/
+include
+
+*.bz2
+*.zip
+*.gz
