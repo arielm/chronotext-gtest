@@ -5,3 +5,10 @@ include
 *.bz2
 *.zip
 *.gz
+
+*.out
+*.out.js
+*.out.js.mem
+
+libs/
+obj/
