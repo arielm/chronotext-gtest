@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ -z $ANDROID_NDK ]; then
-  echo "ANDROID_NDK MUST BE DEFINED!"
+if [ -z $NDK_PATH ]; then
+  echo "NDK_PATH MUST BE DEFINED!"
   exit -1
 fi
 
@@ -18,7 +18,7 @@ HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
 CMAKE_TOOLCHAIN_FILE="../../cmake/platforms/android.toolchain.cmake"
 
 ANDROID_ABI="armeabi-v7a"
-ANDROID_API="android-16"
+ANDROID_PLATFORM="android-16"
 
 # ---
 
@@ -28,7 +28,7 @@ rm -rf build
 mkdir build
 cd build
 
-cmake -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} -DANDROID_ABI=${ANDROID_ABI} -DANDROID_NATIVE_API_LEVEL=${ANDROID_API} -DCMAKE_BUILD_TYPE=Release ..
+cmake -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} -DANDROID_NDK=${NDK_PATH} -DANDROID_ABI=${ANDROID_ABI} -DANDROID_NATIVE_API_LEVEL=${ANDROID_PLATFORM} -DCMAKE_BUILD_TYPE=Release ..
 make -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
