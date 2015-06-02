@@ -13,3 +13,4 @@ include
 libs/
 obj/
 *.dSYM/
+*.app/
