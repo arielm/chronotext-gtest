@@ -12,3 +12,4 @@ include
 
 libs/
 obj/
+*.dSYM/
