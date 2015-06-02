@@ -11,7 +11,7 @@ rm -rf dist
 # -----------
 
 if [ ! -f $GTEST_ZIP ]; then
-  echo "DOWNLOADING ${GTEST_SRC}"
+  echo "DOWNLOADING $GTEST_SRC"
   curl -L -O $GTEST_SRC
 fi
 
@@ -24,7 +24,7 @@ fi
 # UNPACKING
 # ---------
 
-echo "UNPACKING ${$GTEST_ZIP}"
+echo "UNPACKING $GTEST_ZIP"
 unzip $GTEST_ZIP
 
 if [ ! -d $GTEST_DIR ]; then
@@ -32,7 +32,7 @@ if [ ! -d $GTEST_DIR ]; then
   exit 1
 fi
 
-mv ${GTEST_DIR} dist
+mv $GTEST_DIR dist
 ln -s dist/include include
 
 echo "DONE!"
