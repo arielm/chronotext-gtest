@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z $GTEST_PATH ]; then
+if [ -z "$GTEST_PATH" ]; then
   echo "GTEST_PATH MUST BE DEFINED!"
   exit -1  
 fi
@@ -14,5 +14,5 @@ EXE="hello_gtest"
 
 ndk-build -j$HOST_NUM_CPUS
 
-adb push obj/local/${ANDROID_ABI}/${EXE} /data/local/tmp/
-adb shell /data/local/tmp/${EXE}
+adb push obj/local/$ANDROID_ABI/$EXE /data/local/tmp/
+adb shell /data/local/tmp/$EXE
