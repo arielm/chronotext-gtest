@@ -1,7 +1,7 @@
 #!/bin/sh
 
-GTEST_DIR="googletest-emscripten"
-GTEST_ZIP="emscripten.zip"
+GTEST_DIR="googletest-patches"
+GTEST_ZIP="patches.zip"
 GTEST_SRC="https://github.com/arielm/googletest/archive/${GTEST_ZIP}"
 
 rm -rf dist
