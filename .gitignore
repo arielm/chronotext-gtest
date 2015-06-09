@@ -10,7 +10,10 @@ include
 *.out.js
 *.out.js.mem
 
+build*/
 libs/
 obj/
 *.dSYM/
 *.app/
+
+.idea/

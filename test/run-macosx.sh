@@ -1,21 +1,44 @@
 #!/bin/sh
 
-if [ -z "$GTEST_PATH" ]; then
-  echo "GTEST_PATH MUST BE DEFINED!"
+if [ -z "$GTEST_ROOT" ]; then
+  echo "GTEST_ROOT MUST BE DEFINED!"
   exit -1  
 fi
 
+rm -rf build
+mkdir build && cd build
+
 # ---
 
-SRC="hello_gtest.cpp"
+OSX_DEPLOYMENT_TARGET=10.7
+OSX_ARCHS="x86_64"
 
-clang++ $SRC -std=c++11 -stdlib=libc++ -I"$GTEST_PATH/include" -L"$GTEST_PATH/lib/macosx" -lgtest -lgtest_main
+INSTALL_PREFIX="osx"
+CMAKE_TOOLCHAIN_FILE="$GTEST_ROOT/cmake/osx.cmake"
+
+cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" \
+  -DOSX_DEPLOYMENT_TARGET=$OSX_DEPLOYMENT_TARGET \
+  -DOSX_ARCHS="$OSX_ARCHS" \
+  -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
 
 if (( $? )) ; then
-  echo "COMPILATION FAILED!"
+  echo "cmake FAILED!"
   exit -1
 fi
 
 # ---
 
-./a.out
+HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
+make VERBOSE="" -j$HOST_NUM_CPUS
+
+if (( $? )) ; then
+  echo "make FAILED!"
+  exit -1
+fi
+
+# ---
+
+EXE="HelloGTest"
+./$EXE

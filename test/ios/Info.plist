@@ -9,11 +9,11 @@
 	    <string>iPhoneOS</string>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>a.out</string>
+	<string>HelloGTest</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.chronotext.hello-gtest</string>
+	<string>org.chronotext.HelloGTest</string>
 	<key>CFBundleResourceSpecification</key>
 	<string>ResourceRules.plist</string>
 	<key>LSRequiresIPhoneOS</key>

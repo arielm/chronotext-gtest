@@ -1,32 +1,54 @@
 #!/bin/sh
 
-if [ -z "$GTEST_PATH" ]; then
-  echo "GTEST_PATH MUST BE DEFINED!"
+if [ -z "$GTEST_ROOT" ]; then
+  echo "GTEST_ROOT MUST BE DEFINED!"
   exit -1  
 fi
 
+rm -rf build
+mkdir build && cd build
+
 # ---
 
-IOS_SDK="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
-SRC="hello_gtest.cpp"
+IOS_DEPLOYMENT_TARGET=6.0
+IOS_ARCHS="armv7;arm64"
 
-clang++ $SRC -arch armv7 -std=c++11 -stdlib=libc++ -miphoneos-version-min=5.0 -isysroot "$IOS_SDK" -I"$GTEST_PATH/include" -L"$GTEST_PATH/lib/ios" -lgtest -lgtest_main
+INSTALL_PREFIX="ios"
+CMAKE_TOOLCHAIN_FILE="$GTEST_ROOT/cmake/ios.cmake"
+
+cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" \
+  -DIOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
+  -DIOS_ARCHS="$IOS_ARCHS" \
+  -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
 
 if (( $? )) ; then
-  echo "COMPILATION FAILED!"
+  echo "cmake FAILED!"
   exit -1
 fi
 
 # ---
 
-APP="HelloGTest.app"
+HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
+make VERBOSE="" -j$HOST_NUM_CPUS
+
+if (( $? )) ; then
+  echo "make FAILED!"
+  exit -1
+fi
+
+# ---
+
 CODE_SIGN_IDENTITY="iPhone Developer"
+EXE="HelloGTest"
+APP="$EXE.app"
 
 rm -rf $APP
 mkdir -p $APP
 
-mv a.out $APP/
-cp ios/Info.plist ios/ResourceRules.plist $APP/
-codesign -f -s "$CODE_SIGN_IDENTITY" --entitlements ios/Entitlements.plist $APP
+mv $EXE $APP/
+cp ../ios/Info.plist ../ios/ResourceRules.plist $APP/
+codesign -f -s "$CODE_SIGN_IDENTITY" --entitlements ../ios/Entitlements.plist $APP
 
-ios-deploy --uninstall --noninteractive --debug --bundle $APP
+ios-deploy --noninteractive --debug --bundle $APP
