@@ -13,6 +13,7 @@ mkdir build && cd build
 INSTALL_PREFIX="emscripten"
 
 emcmake cmake \
+  -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DNO_CMAKE_FIND_ROOT_PATH=1 \
   -DCMAKE_BUILD_TYPE=Release \

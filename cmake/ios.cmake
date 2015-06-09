@@ -13,7 +13,7 @@ set (CMAKE_OSX_SYSROOT iphoneos
 )
 
 set (CMAKE_OSX_ARCHITECTURES
-  "${IOS_ARCHS}"
+  ${IOS_ARCHS}
   CACHE STRING "cmake_osx_architectures/ios"
 )
 
