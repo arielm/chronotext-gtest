@@ -12,11 +12,14 @@ mkdir build && cd build
 
 # ---
 
+TOOLCHAIN_FILE="../../cmake/android.toolchain.cmake"
+INSTALL_PREFIX="android/armeabi-v7a"
+
 ANDROID_ABI="armeabi-v7a"
 ANDROID_PLATFORM=android-16
-CMAKE_TOOLCHAIN_FILE="../../cmake/android.toolchain.cmake"
 
-cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" \
+cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
+  -DLIBRARY_OUTPUT_PATH="../../lib/$INSTALL_PREFIX" \
   -DANDROID_NDK="$NDK_ROOT" \
   -DANDROID_ABI="$ANDROID_ABI" \
   -DANDROID_NATIVE_API_LEVEL=$ANDROID_PLATFORM \
@@ -32,20 +35,9 @@ fi
 # ---
 
 HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-make VERBOSE="" -j$HOST_NUM_CPUS
+make VERBOSE=1 -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
   echo "make FAILED!"
   exit -1
 fi
-
-# ---
-
-INSTALL_PREFIX="android/armeabi-v7a"
-LIB_DIR="../../lib/$INSTALL_PREFIX"
-
-rm -rf $LIB_DIR
-mkdir -p $LIB_DIR
-mv *.a $LIB_DIR
-
-echo "DONE!"

@@ -12,7 +12,10 @@ mkdir build && cd build
 
 # ---
 
+INSTALL_PREFIX="emscripten"
+
 emcmake cmake \
+  -DLIBRARY_OUTPUT_PATH="../../lib/$INSTALL_PREFIX" \
   -DCMAKE_BUILD_TYPE=Release \
   -Dgtest_disable_pthreads=ON \
   -Dgtest_build_tests=OFF \
@@ -26,20 +29,9 @@ fi
 # ---
 
 HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-emmake make VERBOSE="" -j$HOST_NUM_CPUS
+emmake make VERBOSE=1 -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
   echo "make FAILED!"
   exit -1
 fi
-
-# ---
-
-INSTALL_PREFIX="emscripten"
-LIB_DIR="../../lib/$INSTALL_PREFIX"
-
-rm -rf $LIB_DIR
-mkdir -p $LIB_DIR
-mv *.a $LIB_DIR
-
-echo "DONE!"

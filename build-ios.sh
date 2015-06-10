@@ -12,11 +12,14 @@ mkdir build && cd build
 
 # ---
 
+TOOLCHAIN_FILE="../../cmake/ios.cmake"
+INSTALL_PREFIX="ios"
+
 IOS_DEPLOYMENT_TARGET=6.0
 IOS_ARCHS="armv7;arm64"
-CMAKE_TOOLCHAIN_FILE="../../cmake/ios.cmake"
 
-cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" \
+cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
+  -DLIBRARY_OUTPUT_PATH="../../lib/$INSTALL_PREFIX" \
   -DIOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
   -DIOS_ARCHS="$IOS_ARCHS" \
   -DCMAKE_BUILD_TYPE=Release \
@@ -31,20 +34,9 @@ fi
 # ---
 
 HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-make VERBOSE="" -j$HOST_NUM_CPUS
+make VERBOSE=1 -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
   echo "make FAILED!"
   exit -1
 fi
-
-# ---
-
-INSTALL_PREFIX="ios"
-LIB_DIR="../../lib/$INSTALL_PREFIX"
-
-rm -rf $LIB_DIR
-mkdir -p $LIB_DIR
-mv *.a $LIB_DIR
-
-echo "DONE!"

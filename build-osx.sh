@@ -12,11 +12,14 @@ mkdir build && cd build
 
 # ---
 
+TOOLCHAIN_FILE="../../cmake/osx.cmake"
+INSTALL_PREFIX="osx"
+
 OSX_DEPLOYMENT_TARGET=10.7
 OSX_ARCHS="x86_64"
-CMAKE_TOOLCHAIN_FILE="../../cmake/osx.cmake"
 
-cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" \
+cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
+  -DLIBRARY_OUTPUT_PATH="../../lib/$INSTALL_PREFIX" \
   -DOSX_DEPLOYMENT_TARGET=$OSX_DEPLOYMENT_TARGET \
   -DOSX_ARCHS="$OSX_ARCHS" \
   -DCMAKE_BUILD_TYPE=Release \
@@ -31,25 +34,9 @@ fi
 # ---
 
 HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-make VERBOSE="" -j$HOST_NUM_CPUS
+make VERBOSE=1 -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
   echo "make FAILED!"
   exit -1
 fi
-
-# ---
-
-#
-# TODO: CONSIDER USING CMAKE'S LIBRARY_OUTPUT_PATH INSTEAD...
-# REFERENCE: http://www.cmake.org/Wiki/CMake_Useful_Variables#Environment_Variables
-#
-
-INSTALL_PREFIX="osx"
-LIB_DIR="../../lib/$INSTALL_PREFIX"
-
-rm -rf $LIB_DIR
-mkdir -p $LIB_DIR
-mv *.a $LIB_DIR
-
-echo "DONE!"
