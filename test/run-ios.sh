@@ -10,7 +10,7 @@ mkdir build && cd build
 
 # ---
 
-TOOLCHAIN_FILE="$GTEST_ROOT/cmake/ios-xcode.cmake"
+TOOLCHAIN_FILE="$GTEST_ROOT/cmake/ios.xcode.cmake"
 INSTALL_PREFIX="ios"
 
 cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Xcode \
