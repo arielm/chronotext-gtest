@@ -13,6 +13,7 @@ include
 build*/
 libs/
 obj/
+bin/
 *.dSYM/
 *.app/
 

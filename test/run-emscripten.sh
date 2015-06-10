@@ -11,8 +11,10 @@ mkdir build && cd build
 # ---
 
 INSTALL_PREFIX="emscripten"
+INSTALL_PATH="../bin/$INSTALL_PREFIX"
 
 emcmake cmake \
+  -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DNO_CMAKE_FIND_ROOT_PATH=1 \
@@ -36,5 +38,7 @@ fi
 
 # ---
 
-EXE="HelloGTest"
-node $EXE.js
+PROJECT_NAME="HelloGTest"
+
+cd "$INSTALL_PATH"
+node $PROJECT_NAME.js

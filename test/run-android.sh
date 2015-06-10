@@ -17,11 +17,13 @@ mkdir build && cd build
 
 TOOLCHAIN_FILE="$GTEST_ROOT/cmake/android.toolchain.cmake"
 INSTALL_PREFIX="android/armeabi-v7a"
+INSTALL_PATH="../bin/$INSTALL_PREFIX"
 
 ANDROID_ABI="armeabi-v7a"
 ANDROID_PLATFORM=android-16
 
 cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
+  -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DNO_CMAKE_FIND_ROOT_PATH=1 \
@@ -48,7 +50,7 @@ fi
 
 # ---
 
-EXE="HelloGTest"
+PROJECT_NAME="HelloGTest"
 
-adb push $EXE /data/local/tmp/
-adb shell /data/local/tmp/$EXE
+adb push "$INSTALL_PATH/$PROJECT_NAME" /data/local/tmp/
+adb shell /data/local/tmp/$PROJECT_NAME
