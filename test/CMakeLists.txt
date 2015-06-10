@@ -16,5 +16,5 @@ endif()
 
 include_directories (${GTEST_INCLUDE_DIRS})
 
-add_executable (HelloGTest HelloGTest.cpp)
+add_executable (HelloGTest MACOSX_BUNDLE HelloGTest.cpp)
 target_link_libraries (HelloGTest ${GTEST_BOTH_LIBRARIES})

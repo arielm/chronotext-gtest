@@ -10,15 +10,10 @@ mkdir build && cd build
 
 # ---
 
-IOS_DEPLOYMENT_TARGET=6.0
-IOS_ARCHS="armv7;arm64"
-
 INSTALL_PREFIX="ios"
-CMAKE_TOOLCHAIN_FILE="$GTEST_ROOT/cmake/ios.cmake"
+CMAKE_TOOLCHAIN_FILE="../cmake/ios-xcode.cmake"
 
-cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" \
-  -DIOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
-  -DIOS_ARCHS="$IOS_ARCHS" \
+cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" -G Xcode \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DCMAKE_BUILD_TYPE=Release \
@@ -31,8 +26,8 @@ fi
 
 # ---
 
-HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-make VERBOSE="" -j$HOST_NUM_CPUS
+TARGET="HelloGTest"
+xcodebuild -target $TARGET -configuration Release
 
 if (( $? )) ; then
   echo "make FAILED!"
@@ -41,15 +36,4 @@ fi
 
 # ---
 
-CODE_SIGN_IDENTITY="iPhone Developer"
-EXE="HelloGTest"
-APP="$EXE.app"
-
-rm -rf $APP
-mkdir -p $APP
-
-mv $EXE $APP/
-cp ../ios/Info.plist ../ios/ResourceRules.plist $APP/
-codesign -f -s "$CODE_SIGN_IDENTITY" --entitlements ../ios/Entitlements.plist $APP
-
-ios-deploy --noninteractive --debug --bundle $APP
+ios-deploy --noninteractive --debug --bundle Release-iphoneos/HelloGTest.app
