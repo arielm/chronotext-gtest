@@ -30,10 +30,10 @@ TARGET="HelloGTest"
 xcodebuild -target $TARGET -configuration Release
 
 if (( $? )) ; then
-  echo "make FAILED!"
+  echo "xcodebuild FAILED!"
   exit -1
 fi
 
 # ---
 
-ios-deploy --noninteractive --debug --bundle Release-iphoneos/HelloGTest.app
+ios-deploy --noninteractive --debug --bundle "Release-iphoneos/$TARGET.app"

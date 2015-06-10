@@ -40,6 +40,11 @@ fi
 
 # ---
 
+#
+# TODO: CONSIDER USING CMAKE'S LIBRARY_OUTPUT_PATH INSTEAD...
+# REFERENCE: http://www.cmake.org/Wiki/CMake_Useful_Variables#Environment_Variables
+#
+
 INSTALL_PREFIX="osx"
 LIB_DIR="../../lib/$INSTALL_PREFIX"
 
