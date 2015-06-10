@@ -1,10 +1,14 @@
-if (NOT DEFINED OSX_ARCHS)
-  set(OSX_ARCHS "x86_64")
-endif()
+set (
+  OSX_ARCHS
+  "x86_64"
+  CACHE STRING "osx_archs"
+)
 
-if (NOT DEFINED OSX_DEPLOYMENT_TARGET)
-  set(OSX_DEPLOYMENT_TARGET 10.7)
-endif()
+set (
+  OSX_DEPLOYMENT_TARGET
+  10.7
+  CACHE STRING "osx_deployment_target"
+)
 
 # ---
 

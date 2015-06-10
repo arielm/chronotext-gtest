@@ -1,10 +1,14 @@
-if (NOT DEFINED IOS_ARCHS)
-  set(IOS_ARCHS "armv7;arm64")
-endif()
+set (
+  IOS_ARCHS
+  "armv7;arm64"
+  CACHE STRING "ios_archs"
+)
 
-if (NOT DEFINED IOS_DEPLOYMENT_TARGET)
-  set(IOS_DEPLOYMENT_TARGET 7.0)
-endif()
+set (
+  IOS_DEPLOYMENT_TARGET
+  6.0
+  CACHE STRING "ios_deployment_target"
+)
 
 # ---
 

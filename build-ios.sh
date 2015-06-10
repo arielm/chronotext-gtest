@@ -15,6 +15,9 @@ mkdir build && cd build
 TOOLCHAIN_FILE="../../cmake/ios.cmake"
 INSTALL_PREFIX="ios"
 
+#IOS_DEPLOYMENT_TARGET=5.1.1
+#IOS_ARCHS="armv7"
+
 IOS_DEPLOYMENT_TARGET=6.0
 IOS_ARCHS="armv7;arm64"
 
