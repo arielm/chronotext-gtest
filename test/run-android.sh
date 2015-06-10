@@ -15,19 +15,19 @@ mkdir build && cd build
 
 # ---
 
+TOOLCHAIN_FILE="$GTEST_ROOT/cmake/android.toolchain.cmake"
+INSTALL_PREFIX="android/armeabi-v7a"
+
 ANDROID_ABI="armeabi-v7a"
 ANDROID_PLATFORM=android-16
 
-INSTALL_PREFIX="android/armeabi-v7a"
-CMAKE_TOOLCHAIN_FILE="$GTEST_ROOT/cmake/android.toolchain.cmake"
-
-cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" \
-  -DANDROID_NDK="$NDK_ROOT" \
-  -DANDROID_ABI="$ANDROID_ABI" \
-  -DANDROID_NATIVE_API_LEVEL=$ANDROID_PLATFORM \
+cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DNO_CMAKE_FIND_ROOT_PATH=1 \
+  -DANDROID_NDK="$NDK_ROOT" \
+  -DANDROID_ABI="$ANDROID_ABI" \
+  -DANDROID_NATIVE_API_LEVEL=$ANDROID_PLATFORM \
   -DCMAKE_BUILD_TYPE=Release \
   ..
 
@@ -39,7 +39,7 @@ fi
 # ---
 
 HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-make VERBOSE="" -j$HOST_NUM_CPUS
+make VERBOSE=1 -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
   echo "make FAILED!"

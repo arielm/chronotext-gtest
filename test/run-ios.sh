@@ -10,10 +10,10 @@ mkdir build && cd build
 
 # ---
 
+TOOLCHAIN_FILE="../cmake/ios-xcode.cmake"
 INSTALL_PREFIX="ios"
-CMAKE_TOOLCHAIN_FILE="../cmake/ios-xcode.cmake"
 
-cmake -DCMAKE_TOOLCHAIN_FILE="$CMAKE_TOOLCHAIN_FILE" -G Xcode \
+cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Xcode \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DCMAKE_BUILD_TYPE=Release \

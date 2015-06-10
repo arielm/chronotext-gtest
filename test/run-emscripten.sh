@@ -27,7 +27,7 @@ fi
 # ---
 
 HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-emmake make VERBOSE="" -j$HOST_NUM_CPUS
+emmake make VERBOSE=1 -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
   echo "make FAILED!"
