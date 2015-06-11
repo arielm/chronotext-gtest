@@ -5,13 +5,16 @@ if [ -z "$GTEST_ROOT" ]; then
   exit -1  
 fi
 
-rm -rf build
-mkdir build && cd build
+INSTALL_PREFIX="emscripten"
 
 # ---
 
-INSTALL_PREFIX="emscripten"
-INSTALL_PATH="../bin/$INSTALL_PREFIX"
+BUILD_DIR="build/$INSTALL_PREFIX"
+INSTALL_PATH="../../bin/$INSTALL_PREFIX"
+
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 emcmake cmake \
   -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
@@ -19,7 +22,7 @@ emcmake cmake \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DNO_CMAKE_FIND_ROOT_PATH=1 \
   -DCMAKE_BUILD_TYPE=Release \
-  ..
+  ../..
 
 if (( $? )) ; then
   echo "cmake FAILED!"

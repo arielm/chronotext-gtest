@@ -1,4 +1,3 @@
-dist/
 lib/
 include
 
@@ -9,12 +8,12 @@ include
 *.out
 *.out.js
 *.out.js.mem
+*.dSYM/
+*.app/
 
-build*/
+build/
 libs/
 obj/
 bin/
-*.dSYM/
-*.app/
 
 .idea/

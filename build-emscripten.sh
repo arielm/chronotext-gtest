@@ -1,25 +1,28 @@
 #!/bin/sh
 
-if [ ! -d dist ]; then
-  echo "dist DIRECTORY NOT FOUND!"
+SRC_DIR="build/gtest-prefix/src"
+
+if [ ! -d $SRC_DIR ]; then
+  echo "src DIRECTORY NOT FOUND!"
   exit 1
 fi
 
-cd dist
-
-rm -rf build
-mkdir build && cd build
+INSTALL_PREFIX="emscripten"
 
 # ---
 
-INSTALL_PREFIX="emscripten"
+BUILD_DIR="$SRC_DIR/gtest-build/$INSTALL_PREFIX"
+INSTALL_PATH="../../../../../lib/$INSTALL_PREFIX"
+
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 emcmake cmake \
-  -DLIBRARY_OUTPUT_PATH="../../lib/$INSTALL_PREFIX" \
+  -DLIBRARY_OUTPUT_PATH="$INSTALL_PATH" \
   -DCMAKE_BUILD_TYPE=Release \
   -Dgtest_disable_pthreads=ON \
-  -Dgtest_build_tests=OFF \
-  ..
+  ../../gtest
 
 if (( $? )) ; then
   echo "cmake FAILED!"

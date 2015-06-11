@@ -10,17 +10,20 @@ if [ -z "$NDK_ROOT" ]; then
   exit -1
 fi
 
-rm -rf build
-mkdir build && cd build
-
-# ---
-
-TOOLCHAIN_FILE="$GTEST_ROOT/cmake/android.toolchain.cmake"
-INSTALL_PREFIX="android/armeabi-v7a"
-INSTALL_PATH="../bin/$INSTALL_PREFIX"
+INSTALL_PREFIX="android"
 
 ANDROID_ABI="armeabi-v7a"
 ANDROID_PLATFORM=android-16
+
+# ---
+
+BUILD_DIR="build/$INSTALL_PREFIX"
+INSTALL_PATH="../../bin/$INSTALL_PREFIX"
+TOOLCHAIN_FILE="$GTEST_ROOT/cmake/android.toolchain.cmake"
+
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
   -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
@@ -31,7 +34,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
   -DANDROID_ABI="$ANDROID_ABI" \
   -DANDROID_NATIVE_API_LEVEL=$ANDROID_PLATFORM \
   -DCMAKE_BUILD_TYPE=Release \
-  ..
+  ../..
 
 if (( $? )) ; then
   echo "cmake FAILED!"

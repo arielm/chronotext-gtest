@@ -5,20 +5,23 @@ if [ -z "$GTEST_ROOT" ]; then
   exit -1  
 fi
 
-rm -rf build
-mkdir build && cd build
-
-# ---
-
-TOOLCHAIN_FILE="$GTEST_ROOT/cmake/ios.xcode.cmake"
 INSTALL_PREFIX="ios"
-INSTALL_PATH="../bin/$INSTALL_PREFIX"
 
 #IOS_DEPLOYMENT_TARGET=5.1.1
 #IOS_ARCHS="armv7"
 
 IOS_DEPLOYMENT_TARGET=6.0
 IOS_ARCHS="armv7;arm64"
+
+# ---
+
+BUILD_DIR="build/$INSTALL_PREFIX"
+INSTALL_PATH="../../bin/$INSTALL_PREFIX"
+TOOLCHAIN_FILE="$GTEST_ROOT/cmake/ios.xcode.cmake"
+
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Xcode \
   -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
@@ -27,7 +30,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Xcode \
   -DIOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
   -DIOS_ARCHS="$IOS_ARCHS" \
   -DCMAKE_BUILD_TYPE=Release \
-  ..
+  ../..
 
 if (( $? )) ; then
   echo "cmake FAILED!"
