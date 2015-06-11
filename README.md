@@ -37,8 +37,8 @@ This will build static libs for the relevant platforms, and package everything a
    |  |--libgtest.a
    |  |--libgtest_main.a
    |--emscripten
-   |  |--libgtest.a
-   |  |--libgtest_main.a
+      |--libgtest.a
+      |--libgtest_main.a
 ```
 
 ## Run...
