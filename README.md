@@ -13,7 +13,7 @@ More info in the [Wiki](https://github.com/arielm/chronotext-gtest/wiki)...
 cd chronotext-gtest
 ./setup.sh
 ```
-This will download and unpack a version of GoogleTest adapted to the relevant *targets*.
+This will download and unpack a version of GoogleTest adapted to the relevant platforms.
 
 ## Build...
 ```
@@ -22,7 +22,7 @@ This will download and unpack a version of GoogleTest adapted to the relevant *t
 ./build-android.sh
 ./build-emscripten.sh
 ```
-This will build static libs for the relevant *targets*, and package everything as follows:
+This will build static libs for the relevant platforms, and package everything as follows:
 ```
 |--include
 |  |--gtest
@@ -34,9 +34,8 @@ This will build static libs for the relevant *targets*, and package everything a
    |  |--libgtest.a
    |  |--libgtest_main.a
    |--android
-   |  |--armeabi-v7a
-   |     |--libgtest.a
-   |     |--libgtest_main.a
+   |  |--libgtest.a
+   |  |--libgtest_main.a
    |--emscripten
    |  |--libgtest.a
    |  |--libgtest_main.a
@@ -51,4 +50,4 @@ cd test
 ./run-android.sh
 ./run-emscripten.sh
 ```
-This will build a simple test, and execute it on the relevant *targets*.
+This will build a simple test, and execute it on the relevant platforms.
