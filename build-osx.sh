@@ -16,7 +16,7 @@ OSX_ARCHS="x86_64"
 
 BUILD_DIR="$SRC_DIR/gtest-build/$INSTALL_PREFIX"
 INSTALL_PATH="../../../../../lib/$INSTALL_PREFIX"
-TOOLCHAIN_FILE="../../../../../cmake/osx.cmake" # FIXME: NOT WORKING?
+TOOLCHAIN_FILE="../../../../../cmake/osx.cmake"
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"

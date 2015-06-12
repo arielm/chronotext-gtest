@@ -5,6 +5,8 @@ if [ -z "$GTEST_ROOT" ]; then
   exit -1  
 fi
 
+PROJECT_NAME="HelloGTest"
+BUILD_TYPE=Release
 INSTALL_PREFIX="emscripten"
 
 # ---
@@ -17,15 +19,15 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 emcmake cmake \
+  -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
   -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DNO_CMAKE_FIND_ROOT_PATH=1 \
-  -DCMAKE_BUILD_TYPE=Release \
   ../..
 
 if (( $? )) ; then
-  echo "cmake FAILED!"
+  echo "CONFIGURATION FAILED!"
   exit -1
 fi
 
@@ -35,13 +37,11 @@ HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
 emmake make VERBOSE=1 -j$HOST_NUM_CPUS
 
 if (( $? )) ; then
-  echo "make FAILED!"
+  echo "BUILD FAILED!"
   exit -1
 fi
 
 # ---
-
-PROJECT_NAME="HelloGTest"
 
 cd "$INSTALL_PATH"
 node $PROJECT_NAME.js

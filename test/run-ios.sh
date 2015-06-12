@@ -5,6 +5,8 @@ if [ -z "$GTEST_ROOT" ]; then
   exit -1  
 fi
 
+PROJECT_NAME="HelloGTest"
+BUILD_TYPE=Release
 INSTALL_PREFIX="ios"
 
 #IOS_DEPLOYMENT_TARGET=5.1.1
@@ -24,29 +26,28 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Xcode \
+  -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
   -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DIOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
   -DIOS_ARCHS="$IOS_ARCHS" \
-  -DCMAKE_BUILD_TYPE=Release \
   ../..
 
 if (( $? )) ; then
-  echo "cmake FAILED!"
+  echo "CONFIGURATION FAILED!"
   exit -1
 fi
 
 # ---
 
-PROJECT_NAME="HelloGTest"
-xcodebuild -target $PROJECT_NAME -configuration Release
+cmake --build . --target $PROJECT_NAME --config $BUILD_TYPE
 
 if (( $? )) ; then
-  echo "xcodebuild FAILED!"
+  echo "BUILD FAILED!"
   exit -1
 fi
 
 # ---
 
-ios-deploy --noninteractive --debug --bundle "$INSTALL_PATH/Release/$PROJECT_NAME.app"
+ios-deploy --noninteractive --debug --bundle "$INSTALL_PATH/$BUILD_TYPE/$PROJECT_NAME.app"
