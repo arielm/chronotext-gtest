@@ -15,31 +15,27 @@ OSX_ARCHS="x86_64"
 # ---
 
 BUILD_DIR="$SRC_DIR/gtest-build/$INSTALL_PREFIX"
-INSTALL_PATH="../../../../../lib/$INSTALL_PREFIX"
-TOOLCHAIN_FILE="../../../../../cmake/osx.cmake"
+INSTALL_PATH="$(pwd)/lib/$INSTALL_PREFIX"
+TOOLCHAIN_FILE="$(pwd)/cmake/osx.cmake"
 
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
-cd "$BUILD_DIR"
-
-cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
-  -DLIBRARY_OUTPUT_PATH="$INSTALL_PATH" \
+cmake -H"$SRC_DIR/gtest" -B"$BUILD_DIR" \
+  -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
   -DCMAKE_BUILD_TYPE=Release \
+  -DLIBRARY_OUTPUT_PATH="$INSTALL_PATH" \
   -DOSX_DEPLOYMENT_TARGET=$OSX_DEPLOYMENT_TARGET \
-  -DOSX_ARCHS="$OSX_ARCHS" \
-  ../../gtest
+  -DOSX_ARCHS="$OSX_ARCHS"
 
 if (( $? )) ; then
-  echo "cmake FAILED!"
+  echo "CONFIGURATION FAILED!"
   exit -1
 fi
 
 # ---
 
-HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-make VERBOSE=1 -j$HOST_NUM_CPUS
+cmake --build "$BUILD_DIR"
 
 if (( $? )) ; then
-  echo "make FAILED!"
+  echo "BUILD FAILED!"
   exit -1
 fi

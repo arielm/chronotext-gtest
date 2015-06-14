@@ -12,19 +12,15 @@ INSTALL_PREFIX="emscripten"
 # ---
 
 BUILD_DIR="build/$INSTALL_PREFIX"
-INSTALL_PATH="../../bin/$INSTALL_PREFIX"
+INSTALL_PATH="$(pwd)/bin/$INSTALL_PREFIX"
 
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
-cd "$BUILD_DIR"
-
-emcmake cmake \
+emcmake cmake -H. -B"$BUILD_DIR" \
+  -DCMAKE_VERBOSE_MAKEFILE=OFF \
   -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
   -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
-  -DNO_CMAKE_FIND_ROOT_PATH=1 \
-  ../..
+  -DNO_CMAKE_FIND_ROOT_PATH=1
 
 if (( $? )) ; then
   echo "CONFIGURATION FAILED!"
@@ -33,8 +29,7 @@ fi
 
 # ---
 
-HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-emmake make VERBOSE=1 -j$HOST_NUM_CPUS
+cmake --build "$BUILD_DIR"
 
 if (( $? )) ; then
   echo "BUILD FAILED!"

@@ -12,29 +12,24 @@ INSTALL_PREFIX="emscripten"
 # ---
 
 BUILD_DIR="$SRC_DIR/gtest-build/$INSTALL_PREFIX"
-INSTALL_PATH="../../../../../lib/$INSTALL_PREFIX"
+INSTALL_PATH="$(pwd)/lib/$INSTALL_PREFIX"
 
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
-cd "$BUILD_DIR"
-
-emcmake cmake \
-  -DLIBRARY_OUTPUT_PATH="$INSTALL_PATH" \
+emcmake cmake -H"$SRC_DIR/gtest" -B"$BUILD_DIR" \
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
   -DCMAKE_BUILD_TYPE=Release \
-  -Dgtest_disable_pthreads=ON \
-  ../../gtest
+  -DLIBRARY_OUTPUT_PATH="$INSTALL_PATH" \
+  -Dgtest_disable_pthreads=ON
 
 if (( $? )) ; then
-  echo "cmake FAILED!"
+  echo "CONFIGURATION FAILED!"
   exit -1
 fi
 
 # ---
 
-HOST_NUM_CPUS=$(sysctl hw.ncpu | awk '{print $2}')
-emmake make VERBOSE=1 -j$HOST_NUM_CPUS
+cmake --build "$BUILD_DIR"
 
 if (( $? )) ; then
-  echo "make FAILED!"
+  echo "BUILD FAILED!"
   exit -1
 fi

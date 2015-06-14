@@ -18,21 +18,17 @@ IOS_ARCHS="armv7;arm64"
 # ---
 
 BUILD_DIR="build/$INSTALL_PREFIX"
-INSTALL_PATH="../../bin/$INSTALL_PREFIX"
+INSTALL_PATH="$(pwd)/bin/$INSTALL_PREFIX"
 TOOLCHAIN_FILE="$GTEST_ROOT/cmake/ios.xcode.cmake"
 
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
-cd "$BUILD_DIR"
-
-cmake -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Xcode \
+cmake -H. -B"$BUILD_DIR" \
+  -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Xcode \
   -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
   -DEXECUTABLE_OUTPUT_PATH="$INSTALL_PATH" \
   -DCMAKE_PREFIX_PATH="$GTEST_ROOT" \
   -DCMAKE_LIBRARY_ARCHITECTURE="$INSTALL_PREFIX" \
   -DIOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
-  -DIOS_ARCHS="$IOS_ARCHS" \
-  ../..
+  -DIOS_ARCHS="$IOS_ARCHS"
 
 if (( $? )) ; then
   echo "CONFIGURATION FAILED!"
@@ -41,7 +37,7 @@ fi
 
 # ---
 
-cmake --build . --target $PROJECT_NAME --config $BUILD_TYPE
+cmake --build "$BUILD_DIR" --target $PROJECT_NAME --config $BUILD_TYPE
 
 if (( $? )) ; then
   echo "BUILD FAILED!"

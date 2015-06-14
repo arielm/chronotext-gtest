@@ -1,8 +1,6 @@
 #!/bin/sh
 
-rm -rf build
-mkdir -p build
-cd build
+BUILD_DIR="build"
 
-cmake ..
-make VERBOSE=1
+cmake -H. -B"$BUILD_DIR"
+cmake --build "$BUILD_DIR"
