@@ -1,0 +1,39 @@
+diff --git a/cmake/Modules/Platform/Emscripten.cmake b/cmake/Modules/Platform/Emscripten.cmake
+index 1fa0878..77d236b 100644
+--- a/cmake/Modules/Platform/Emscripten.cmake
++++ b/cmake/Modules/Platform/Emscripten.cmake
+@@ -61,11 +61,18 @@ endif()
+ get_filename_component(EMSCRIPTEN_ROOT_PATH "${EMSCRIPTEN_ROOT_PATH}" ABSOLUTE)
+ 
+ if (NOT CMAKE_MODULE_PATH)
+-	set(CMAKE_MODULE_PATH "")
++	set(CMAKE_MODULE_PATH "${EMSCRIPTEN_ROOT_PATH}/cmake/Modules")
+ endif()
+-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${EMSCRIPTEN_ROOT_PATH}/cmake/Modules")
+ 
+-set(CMAKE_FIND_ROOT_PATH "${EMSCRIPTEN_ROOT_PATH}/system")
++if (NOT CMAKE_FIND_ROOT_PATH)
++	set(CMAKE_FIND_ROOT_PATH "${EMSCRIPTEN_ROOT_PATH}/system")
++
++	# Since Emscripten is a cross-compiler, we should never look at the system-provided directories like /usr/include and so on.
++	# Therefore only CMAKE_FIND_ROOT_PATH should be used as a find directory. See http://www.cmake.org/cmake/help/v3.0/variable/CMAKE_FIND_ROOT_PATH_MODE_INCLUDE.html
++	set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
++	set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
++	set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
++endif()
+ 
+ if (CMAKE_HOST_WIN32)
+ 	set(EMCC_SUFFIX ".bat")
+@@ -98,12 +105,6 @@ CMAKE_FORCE_CXX_COMPILER("${CMAKE_CXX_COMPILER}" Clang)
+ # into system paths.
+ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+ 
+-# Since Emscripten is a cross-compiler, we should never look at the system-provided directories like /usr/include and so on.
+-# Therefore only CMAKE_FIND_ROOT_PATH should be used as a find directory. See http://www.cmake.org/cmake/help/v3.0/variable/CMAKE_FIND_ROOT_PATH_MODE_INCLUDE.html
+-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+-set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+-
+ set(CMAKE_SYSTEM_INCLUDE_PATH "${EMSCRIPTEN_ROOT_PATH}/system/include")
+ 
+ # We would prefer to specify a standard set of Clang+Emscripten-friendly common convention for suffix files, especially for CMake executable files,
