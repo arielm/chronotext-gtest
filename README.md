@@ -45,9 +45,9 @@ This will build static libs for the relevant platforms, and package everything a
 ```
 cd test
 
-./run-osx.sh
-./run-ios.sh
-./run-android.sh
-./run-emscripten.sh
+ctest -S run.cmake -VV -DPLATFORM=osx
+ctest -S run.cmake -VV -DPLATFORM=ios
+ctest -S run.cmake -VV -DPLATFORM=android
+ctest -S run.cmake -VV -DPLATFORM=emscripten
 ```
 This will build a simple test, and execute it on the relevant platforms.
