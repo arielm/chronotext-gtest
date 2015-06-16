@@ -5,4 +5,3 @@ rm -rf lib
 rm include
 
 rm -rf test/build
-rm -rf test/bin
