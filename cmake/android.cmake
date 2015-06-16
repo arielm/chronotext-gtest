@@ -17,15 +17,17 @@ set(ANDROID_NDK "$ENV{NDK_ROOT}")
 set(ANDROID_ABI "${ANDROID_ABI}")
 set(ANDROID_NATIVE_API_LEVEL ${ANDROID_PLATFORM})
 
+include("${CMAKE_CURRENT_LIST_DIR}/android.toolchain.cmake")
+
 # ---
 
 set(CMAKE_LIBRARY_ARCHITECTURE android)
 
-if (NOT PROJECT_NAME STREQUAL "CMAKE_TRY_COMPILE")
-  configure_file(cmake/run.android.sh.in run)
-endif()
-
-include("${CMAKE_CURRENT_LIST_DIR}/android.toolchain.cmake")
-
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
+
+if (DEFINED RUN)
+  if (NOT PROJECT_NAME STREQUAL "CMAKE_TRY_COMPILE")
+    configure_file(cmake/run.android.sh.in run)
+  endif()
+endif()
