@@ -10,8 +10,13 @@ set(OSX_DEPLOYMENT_TARGET 10.7
 
 # ---
 
-set(CMAKE_OSX_ARCHITECTURES ${OSX_ARCHS})
-set(CMAKE_CXX_FLAGS "-mmacosx-version-min=${OSX_DEPLOYMENT_TARGET} -stdlib=libc++ -std=c++11")
+set(CMAKE_OSX_ARCHITECTURES ${OSX_ARCHS}
+  CACHE STRING "cmake_osx_architectures/osx"
+)
+
+set(CMAKE_CXX_FLAGS "-mmacosx-version-min=${OSX_DEPLOYMENT_TARGET} -stdlib=libc++ -std=c++11"
+  CACHE STRING "cmake_cxx_flags/osx"
+)
 
 # ---
 

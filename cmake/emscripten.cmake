@@ -5,7 +5,9 @@ endif()
 
 # ---
 
-set(CMAKE_CXX_FLAGS "-Wno-warn-absolute-paths -std=c++11")
+set(CMAKE_CXX_FLAGS "-Wno-warn-absolute-paths -std=c++11"
+  CACHE STRING "cmake_cxx_flags/emscripten"
+)
 
 include("$ENV{EMSCRIPTEN_ROOT}/cmake/Modules/Platform/Emscripten.cmake")
 
