@@ -17,6 +17,10 @@ set(ANDROID_NDK "$ENV{NDK_ROOT}")
 set(ANDROID_ABI "${ANDROID_ABI}")
 set(ANDROID_NATIVE_API_LEVEL ${ANDROID_PLATFORM})
 
+set(CMAKE_CXX_FLAGS "-std=c++11"
+  CACHE STRING "cmake_cxx_flags/android"
+)
+
 include("${CMAKE_CURRENT_LIST_DIR}/android.toolchain.cmake")
 
 # ---

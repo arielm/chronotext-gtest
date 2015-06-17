@@ -3,6 +3,10 @@ if (NOT DEFINED ENV{EMSCRIPTEN_ROOT})
   message(FATAL_ERROR "'EMSCRIPTEN_ROOT' ENVIRONMENT-VARIABLE MUST BE DEFINED!")
 endif()
 
+# ---
+
+set(CMAKE_CXX_FLAGS "-Wno-warn-absolute-paths -std=c++11")
+
 include("$ENV{EMSCRIPTEN_ROOT}/cmake/Modules/Platform/Emscripten.cmake")
 
 # ---
