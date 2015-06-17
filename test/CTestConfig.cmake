@@ -15,22 +15,24 @@ set(PREFIX_PATH
 
 if (PLATFORM STREQUAL osx)
   set(CTEST_CMAKE_GENERATOR "Ninja")
-  set(TOOLCHAIN_FILE "$ENV{GTEST_ROOT}/cmake/osx.cmake")
+  set(TOOLCHAIN_FILE osx.cmake)
+  set(CONFIGURE_ARGS "")
 
 elseif (PLATFORM STREQUAL ios)
   set(CTEST_CMAKE_GENERATOR "Xcode")
-  set(TOOLCHAIN_FILE "$ENV{GTEST_ROOT}/cmake/ios.xcode.cmake")
+  set(TOOLCHAIN_FILE ios.xcode.cmake)
+  set(CONFIGURE_ARGS "")
 
 elseif (PLATFORM STREQUAL android)
   set(CTEST_CMAKE_GENERATOR "Ninja")
-  set(TOOLCHAIN_FILE "$ENV{GTEST_ROOT}/cmake/android.cmake")
+  set(TOOLCHAIN_FILE android.cmake)
+  set(CONFIGURE_ARGS "")
 
 elseif (PLATFORM STREQUAL emscripten)
   set(CTEST_CMAKE_GENERATOR "Ninja")
-  set(TOOLCHAIN_FILE "$ENV{GTEST_ROOT}/cmake/emscripten.cmake")
+  set(TOOLCHAIN_FILE emscripten.cmake)
+  set(CONFIGURE_ARGS "")
 
 else()
   message(FATAL_ERROR "UNSUPPORTED PLATFORM!")
 endif()
-
-set(CONFIGURE_ARGS "-DCMAKE_PREFIX_PATH=${PREFIX_PATH} -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE}")
