@@ -5,7 +5,7 @@ endif()
 
 # ---
 
-set(CTEST_PROJECT_NAME "HelloGTest")
+set(CTEST_PROJECT_NAME "TestGTest")
 
 set(CTEST_CONFIGURATION_TYPE Release)
 
