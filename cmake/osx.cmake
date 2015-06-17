@@ -24,6 +24,6 @@ set(CMAKE_LIBRARY_ARCHITECTURE osx)
 
 if (DEFINED RUN)
   if (NOT PROJECT_NAME STREQUAL "CMAKE_TRY_COMPILE")
-    configure_file(cmake/run.osx.sh.in run)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/osx.sh.in run)
   endif()
 endif()
