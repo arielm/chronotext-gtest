@@ -16,7 +16,7 @@ if (DEFINED CLEAN)
   ctest_empty_binary_directory(${CTEST_BINARY_DIRECTORY})
 endif()
 
-ctest_start("Experimental") # WILL PROCESS CTestConfig.cmake (WHICH MUST EXIST ALONGSIDE CmakeLists.txt)
+ctest_start("Experimental") # WILL PROCESS CTestConfig.cmake (WHICH MUST EXIST ALONGSIDE CMakeLists.txt)
 
 # ---
 
