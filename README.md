@@ -41,13 +41,13 @@ This will build static libs for the relevant platforms, and package everything a
       |--libgtest_main.a
 ```
 
-## Run...
+## Test...
 ```
 cd test
 
-ctest -S run.cmake -VV -DPLATFORM=osx
-ctest -S run.cmake -VV -DPLATFORM=ios
-ctest -S run.cmake -VV -DPLATFORM=android
-ctest -S run.cmake -VV -DPLATFORM=emscripten
+$RUN_TEST -DPLATFORM=osx
+$RUN_TEST -DPLATFORM=ios
+$RUN_TEST -DPLATFORM=android
+$RUN_TEST -DPLATFORM=emscripten
 ```
-This will build a simple test, and execute it on the relevant platforms.
+This will build a test, and run it on the relevant platforms.
