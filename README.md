@@ -11,7 +11,7 @@ More info in the [Wiki](https://github.com/arielm/chronotext-gtest/wiki)...
 ## Setup...
 ```
 cd chronotext-gtest
-./setup.sh
+source setup.sh
 ```
 This will download and unpack a version of GoogleTest adapted to the relevant platforms.
 
