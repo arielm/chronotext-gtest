@@ -50,4 +50,4 @@ $RUN_TEST -DPLATFORM=ios
 $RUN_TEST -DPLATFORM=android
 $RUN_TEST -DPLATFORM=emscripten
 ```
-This will build a test, and run it on the relevant platforms.
+This will build and run a couple of C++ tests on the relevant platforms.
