@@ -5,6 +5,9 @@ endif()
 
 # ---
 
+#
+# TODO: AVOID DOUBLE-INCLUSION OF FLAGS
+#
 set(CMAKE_CXX_FLAGS "-Wno-warn-absolute-paths -std=c++11"
   CACHE STRING "cmake_cxx_flags/emscripten"
 )
@@ -21,6 +24,6 @@ set(CMAKE_LIBRARY_ARCHITECTURE emscripten)
 
 if (DEFINED RUN)
   if (NOT PROJECT_NAME STREQUAL "CMAKE_TRY_COMPILE")
-    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/emscripten.sh.in run)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/emscripten.sh.in run) # TODO: TARGET FILE SHOULD BE NAMED ${PROJECT_NAME} INSTEAD OF run
   endif()
 endif()

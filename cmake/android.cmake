@@ -17,6 +17,9 @@ set(ANDROID_NDK "$ENV{NDK_ROOT}")
 set(ANDROID_ABI "${ANDROID_ABI}")
 set(ANDROID_NATIVE_API_LEVEL ${ANDROID_PLATFORM})
 
+#
+# TODO: AVOID DOUBLE-INCLUSION OF FLAGS
+#
 set(CMAKE_CXX_FLAGS "-std=c++11"
   CACHE STRING "cmake_cxx_flags/android"
 )
@@ -32,6 +35,6 @@ set(CMAKE_LIBRARY_ARCHITECTURE android)
 
 if (DEFINED RUN)
   if (NOT PROJECT_NAME STREQUAL "CMAKE_TRY_COMPILE")
-    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/android.sh.in run)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/android.sh.in run) # TODO: TARGET FILE SHOULD BE NAMED ${PROJECT_NAME} INSTEAD OF run
   endif()
 endif()
