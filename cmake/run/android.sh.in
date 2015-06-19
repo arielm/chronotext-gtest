@@ -1,4 +1,4 @@
 #!/bin/sh
 
 adb push ${PROJECT_NAME} /data/local/tmp/
-adb shell /data/local/tmp/${PROJECT_NAME}
+adb shell /data/local/tmp/${PROJECT_NAME} "$@"
