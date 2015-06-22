@@ -1,9 +1,10 @@
 #!/bin/sh
 
 SRC_DIR="build/gtest-prefix/src/gtest"
+SRC_PATH="$(pwd)/$SRC_DIR"
 
-if [ ! -d "$SRC_DIR" ]; then
-  echo "src DIRECTORY NOT FOUND!"
+if [ ! -d "$SRC_PATH" ]; then
+  echo "SOURCE NOT FOUND!"
   exit 1
 fi
 
@@ -21,13 +22,13 @@ TOOLCHAIN_FILE="$(pwd)/cmake/ios.cmake"
 
 PLATFORM="ios"
 
-BUILD_DIR="build/$PLATFORM"
-INSTALL_DIR="dist/$PLATFORM"
+BUILD_DIR="build/gtest-prefix/src/gtest-build/$PLATFORM"
+INSTALL_PATH="$(pwd)/dist/$PLATFORM"
 
 cmake -H"$SRC_DIR" -B"$BUILD_DIR" \
   -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
-  -DLIBRARY_OUTPUT_PATH="$(pwd)/$INSTALL_DIR/lib" \
+  -DLIBRARY_OUTPUT_PATH="$INSTALL_PATH/lib" \
   -DIOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET \
   -DIOS_ARCHS="$IOS_ARCHS"
 
@@ -38,8 +39,7 @@ fi
 
 # ---
 
-rm -rf "$INSTALL_DIR"
-
+rm -rf "$INSTALL_PATH"
 cmake --build "$BUILD_DIR"
 
 if (( $? )); then
@@ -47,4 +47,5 @@ if (( $? )); then
   exit -1
 fi
 
-ln -s "$(pwd)/$SRC_DIR/include" "$INSTALL_DIR/"
+cd "$INSTALL_PATH"
+ln -s "$SRC_PATH/include"
