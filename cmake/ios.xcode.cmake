@@ -52,8 +52,6 @@ endif()
 
 # ---
 
-set(CMAKE_LIBRARY_ARCHITECTURE ios)
-
 if (DEFINED RUN)
   if (NOT PROJECT_NAME STREQUAL CMAKE_TRY_COMPILE)
     configure_file(${CMAKE_CURRENT_LIST_DIR}/run/ios.sh.in run)

@@ -29,7 +29,3 @@ set(CMAKE_OSX_ARCHITECTURES ${IOS_ARCHS}
 set(CMAKE_CXX_FLAGS "-miphoneos-version-min=${IOS_DEPLOYMENT_TARGET} -stdlib=libc++ -std=c++11"
   CACHE STRING "cmake_cxx_flags/ios"
 )
-
-# ---
-
-set(CMAKE_LIBRARY_ARCHITECTURE ios)

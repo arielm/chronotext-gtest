@@ -1,36 +1,39 @@
 #!/bin/sh
 
-SRC_DIR="build/gtest-prefix/src"
+SRC_DIR="build/gtest-prefix/src/gtest"
 
-if [ ! -d $SRC_DIR ]; then
+if [ ! -d "$SRC_DIR" ]; then
   echo "src DIRECTORY NOT FOUND!"
   exit 1
 fi
 
-INSTALL_PREFIX="emscripten"
-
 # ---
 
-BUILD_DIR="$SRC_DIR/gtest-build/$INSTALL_PREFIX"
-INSTALL_PATH="$(pwd)/lib/$INSTALL_PREFIX"
+PLATFORM="emscripten"
 
-emcmake cmake -H"$SRC_DIR/gtest" -B"$BUILD_DIR" \
+BUILD_DIR="build/$PLATFORM"
+INSTALL_DIR="dist/$PLATFORM"
+
+emcmake cmake -H"$SRC_DIR" -B"$BUILD_DIR" \
   -G Ninja \
-  -DCMAKE_VERBOSE_MAKEFILE=OFF \
   -DCMAKE_BUILD_TYPE=Release \
-  -DLIBRARY_OUTPUT_PATH="$INSTALL_PATH" \
+  -DLIBRARY_OUTPUT_PATH="$(pwd)/$INSTALL_DIR/lib" \
   -Dgtest_disable_pthreads=ON
 
-if (( $? )) ; then
+if (( $? )); then
   echo "CONFIGURATION FAILED!"
   exit -1
 fi
 
 # ---
 
+rm -rf "$INSTALL_DIR"
+
 cmake --build "$BUILD_DIR"
 
-if (( $? )) ; then
+if (( $? )); then
   echo "BUILD FAILED!"
   exit -1
 fi
+
+ln -s "$(pwd)/$SRC_DIR/include" "$INSTALL_DIR/"
