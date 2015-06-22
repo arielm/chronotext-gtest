@@ -22,24 +22,7 @@ This will download and unpack a version of GoogleTest adapted to the relevant pl
 ./build-android.sh
 ./build-emscripten.sh
 ```
-This will build static libs for the relevant platforms, and package everything as follows:
-```
-|--include
-|  |--gtest
-|--lib
-   |--osx
-   |  |--libgtest.a
-   |  |--libgtest_main.a
-   |--ios
-   |  |--libgtest.a
-   |  |--libgtest_main.a
-   |--android
-   |  |--libgtest.a
-   |  |--libgtest_main.a
-   |--emscripten
-      |--libgtest.a
-      |--libgtest_main.a
-```
+This will build static libs for the relevant platforms.
 
 ## Test...
 ```
