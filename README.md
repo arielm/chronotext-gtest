@@ -22,7 +22,7 @@ This will download and unpack a version of GoogleTest adapted to the relevant pl
 ./build-android.sh
 ./build-emscripten.sh
 ```
-This will build static libs for the relevant platforms.
+This will build and package static libs for the relevant platforms.
 
 ## Test...
 ```
