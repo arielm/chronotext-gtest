@@ -24,8 +24,6 @@ IOS_ARCHS="armv7;arm64"
 
 TOOLCHAIN_FILE="$(pwd)/cmake/ios.cmake"
 
-# ---
-
 cmake -H"$SRC_DIR" -B"$BUILD_DIR" \
   -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -40,7 +38,7 @@ fi
 
 # ---
 
-rm -rf "$INSTALL_PATH"
+rm -rf "$INSTALL_PATH" # XXX: REQUIRED?
 cmake --build "$BUILD_DIR"
 
 if [ $? != 0 ]; then

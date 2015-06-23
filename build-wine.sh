@@ -1,7 +1,13 @@
 #!/bin/sh
 
+PLATFORM="wine"
+
 SRC_DIR="build/src"
+BUILD_DIR="build/$PLATFORM"
+INSTALL_DIR="dist/$PLATFORM"
+
 SRC_PATH="$(pwd)/$SRC_DIR"
+INSTALL_PATH="$(pwd)/$INSTALL_DIR"
 
 if [ ! -d "$SRC_PATH" ]; then
   echo "SOURCE NOT FOUND!"
@@ -11,13 +17,6 @@ fi
 # ---
 
 TOOLCHAIN_FILE="$(pwd)/cmake/wine.cmake"
-
-# ---
-
-PLATFORM="wine"
-
-BUILD_DIR="build/$PLATFORM"
-INSTALL_PATH="$(pwd)/dist/$PLATFORM"
 
 cmake -H"$SRC_DIR" -B"$BUILD_DIR" \
   -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Ninja \
@@ -31,7 +30,7 @@ fi
 
 # ---
 
-rm -rf "$INSTALL_PATH"
+rm -rf "$INSTALL_PATH" # XXX: REQUIRED?
 cmake --build "$BUILD_DIR"
 
 if [ $? != 0 ]; then

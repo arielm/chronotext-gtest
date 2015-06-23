@@ -29,7 +29,7 @@ fi
 
 # ---
 
-rm -rf "$INSTALL_PATH"
+rm -rf "$INSTALL_PATH" # XXX: REQUIRED?
 cmake --build "$BUILD_DIR"
 
 if [ $? != 0 ]; then
