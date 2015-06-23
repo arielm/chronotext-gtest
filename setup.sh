@@ -1,25 +1,38 @@
 #!/bin/sh
 
-BUILD_DIR="build"
+ARCHIVE_ZIP="patches.zip"
+ARCHIVE_SRC="https://github.com/arielm/googletest/archive/$ARCHIVE_ZIP"
+ARCHIVE_DIR="googletest-patches"
 
 # ---
 
-cmake -H. -B"$BUILD_DIR"
+rm -rf build
+mkdir -p build
+cd build
 
-if (( $? )); then
-  echo "CONFIGURATION FAILED!"
-  exit -1
+if [ ! -f $ARCHIVE_ZIP ]; then
+  echo "DOWNLOADING $ARCHIVE_SRC"
+  curl -L -O $ARCHIVE_SRC
+
+  if [ $? != 0 ] || [ ! -f $ARCHIVE_ZIP ]; then
+    echo "DOWNLOADING FAILED!"
+    exit 1
+  fi
 fi
 
 # ---
 
-cmake --build "$BUILD_DIR"
+echo "UNPACKING $ARCHIVE_ZIP..."
+unzip -q $ARCHIVE_ZIP
 
-if (( $? )); then
-  echo "BUILD FAILED!"
-  exit -1
+if [ $? != 0 ] || [ ! -d $ARCHIVE_DIR ]; then
+  echo "UNPACKING FAILED!"
+  exit 1
 fi
+
+mv $ARCHIVE_DIR src
 
 # ---
 
+cd ..
 export RUN_TEST="ctest -S $(pwd)/cmake/run.cmake -VV"

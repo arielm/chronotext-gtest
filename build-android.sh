@@ -1,16 +1,22 @@
 #!/bin/sh
 
-if [ -z "$NDK_PATH" ]; then
-  echo "NDK_PATH MUST BE DEFINED!"
-  exit -1  
-fi
+PLATFORM="android"
 
-SRC_DIR="build/gtest-prefix/src/gtest"
+SRC_DIR="build/src"
+BUILD_DIR="build/$PLATFORM"
+INSTALL_DIR="dist/$PLATFORM"
+
 SRC_PATH="$(pwd)/$SRC_DIR"
+INSTALL_PATH="$(pwd)/$INSTALL_DIR"
 
 if [ ! -d "$SRC_PATH" ]; then
   echo "SOURCE NOT FOUND!"
   exit 1
+fi
+
+if [ -z "$NDK_PATH" ]; then
+  echo "NDK_PATH MUST BE DEFINED!"
+  exit -1  
 fi
 
 # ---
@@ -22,11 +28,6 @@ TOOLCHAIN_FILE="$(pwd)/cmake/android.toolchain.cmake"
 
 # ---
 
-PLATFORM="android"
-
-BUILD_DIR="build/gtest-prefix/src/gtest-build/$PLATFORM"
-INSTALL_PATH="$(pwd)/dist/$PLATFORM"
-
 cmake -H"$SRC_DIR" -B"$BUILD_DIR" \
   -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -35,7 +36,7 @@ cmake -H"$SRC_DIR" -B"$BUILD_DIR" \
   -DANDROID_ABI="$ANDROID_ABI" \
   -DANDROID_NATIVE_API_LEVEL=$ANDROID_API
 
-if (( $? )); then
+if [ $? != 0 ]; then
   echo "CONFIGURATION FAILED!"
   exit -1
 fi
@@ -45,7 +46,7 @@ fi
 rm -rf "$INSTALL_PATH"
 cmake --build "$BUILD_DIR"
 
-if (( $? )); then
+if [ $? != 0 ]; then
   echo "BUILD FAILED!"
   exit -1
 fi
