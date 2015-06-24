@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLATFORM="wine"
+PLATFORM="mxe"
 
 SRC_DIR="build/src"
 BUILD_DIR="build/$PLATFORM"
@@ -16,7 +16,7 @@ fi
 
 # ---
 
-TOOLCHAIN_FILE="$(pwd)/cmake/wine.cmake"
+TOOLCHAIN_FILE="$(pwd)/cmake/mxe.cmake"
 
 cmake -H"$SRC_DIR" -B"$BUILD_DIR" \
   -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" -G Ninja \

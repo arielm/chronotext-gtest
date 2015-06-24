@@ -18,7 +18,15 @@ endif()
 
 # --- START ---
 
-set(CONFIGURE_ARGS "")
+#
+# NECESSARY: FOR "PACKAGES" TO BE FOUND WHEN CROSS-COMPILING (ANDROID, EMSCRIPTEN, MXE)
+#
+# REQUIRED: ALL THE "PACKAGES" MUST BE LOCATED UNDER THE "HOME" PATH
+# 
+# WHEN RUNNING VIA boot2docker:
+# - THE "HOME" PATH CORRESPONDS TO /root
+# - I.E. A MXE docker COULD BE LAUNCHED VIA: docker run --rm -it -v ~/DEV:/root/DEV:rw thewtex/cross-compiler-windows-x86
+#
 set(STAGING_PREFIX "$ENV{HOME}")
 
 ctest_start(Experimental) # WILL PROCESS CTestConfig.cmake (WHICH MUST EXIST ALONGSIDE CMakeLists.txt)
