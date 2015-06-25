@@ -5,7 +5,7 @@ Provides support for GoogleTest 1.7 (r711) and CMake (3.3.0) on:
 - iOS (armv7, arm64)
 - Android (armeabi-v7a)
 - Emscripten
-- Windows (via [boot2docker](http://boot2docker.io) and [mxe](http://mxe.cc))
+- Windows/MXE (i686)
 
 More info in the [Wiki](https://github.com/arielm/chronotext-gtest/wiki)...
 
