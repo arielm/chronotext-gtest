@@ -1,6 +1,6 @@
 # GoogleTest
 
-Provides support for GoogleTest 1.7 (r711) and CMake (3.2.2) on:
+Provides support for GoogleTest 1.7 (r711) and CMake (3.3.0) on:
 - OSX (i386, x86_64)
 - iOS (armv7, arm64)
 - Android (armeabi-v7a)
