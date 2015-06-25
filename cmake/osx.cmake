@@ -15,7 +15,7 @@ set(CMAKE_OSX_ARCHITECTURES ${OSX_ARCHS}
 )
 
 #
-# TODO: CHECK IF THE -stdlib AND -std FLAGS ARE ALREADY INCLUDED
+# TODO: AVOID DOUBLE-INCLUSION OF FLAGS
 #
 set(CMAKE_CXX_FLAGS "-mmacosx-version-min=${OSX_DEPLOYMENT_TARGET} -stdlib=libc++ -std=c++11"
   CACHE STRING "cmake_cxx_flags/osx"

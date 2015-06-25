@@ -1,9 +1,13 @@
 
-if (NOT DEFINED ENV{CMAKE_TOOLCHAIN_FILE})
-  message(FATAL_ERROR "CMAKE_TOOLCHAIN_FILE MUST BE DEFINED!")
+if (NOT DEFINED ENV{MXE_PATH})
+  message(FATAL_ERROR "MXE_PATH MUST BE DEFINED!")
 endif()
 
 # ---
+
+set(MXE_TARGET i686-w64-mingw32.static
+  CACHE STRING "mxe_target"
+)
 
 #
 # TODO: AVOID DOUBLE-INCLUSION OF FLAGS
@@ -12,7 +16,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11"
   CACHE STRING "cmake_cxx_flags/mxe"
 )
 
-include("$ENV{CMAKE_TOOLCHAIN_FILE}")
+include("$ENV{MXE_PATH}/usr/${MXE_TARGET}/share/cmake/mxe-conf.cmake")
 
 # ---
 
