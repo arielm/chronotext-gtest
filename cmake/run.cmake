@@ -49,6 +49,15 @@ if (res)
   message(FATAL_ERROR "BUILD FAILED!")
 endif()
 
+# --- INSTALL ---
+
+ctest_build(TARGET install RETURN_VALUE res)
+
+if (res)
+  message("INSTALL FAILED! (NON-FATAL)")
+endif()
+
+
 # --- TEST ---
 
 ctest_test(RETURN_VALUE res)
