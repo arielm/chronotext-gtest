@@ -30,10 +30,10 @@ This will build and package static libs for the relevant platforms.
 ```
 cd test
 
-$RUN_TEST -DPLATFORM=osx
-$RUN_TEST -DPLATFORM=ios
-$RUN_TEST -DPLATFORM=android
-$RUN_TEST -DPLATFORM=emscripten
-$RUN_TEST -DPLATFORM=mxe
+RUN_TEST -DPLATFORM=osx
+RUN_TEST -DPLATFORM=ios
+RUN_TEST -DPLATFORM=android
+RUN_TEST -DPLATFORM=emscripten
+RUN_TEST -DPLATFORM=mxe
 ```
 This will build and run a couple of C++ tests on the relevant platforms.
