@@ -37,4 +37,4 @@ mv $ARCHIVE_DIR src
 cd ..
 
 export GTEST_PATH="$(pwd)"
-export RUN_TEST="ctest -S $(pwd)/cmake/run.cmake -VV"
+alias RUN_TEST='ctest -S $GTEST_PATH/cmake/run.cmake -VV'

@@ -41,22 +41,13 @@ if (res)
   message(FATAL_ERROR "CONFIGURE FAILED!")
 endif()
 
-# --- BUILD ---
-
-ctest_build(RETURN_VALUE res)
-
-if (res)
-  message(FATAL_ERROR "BUILD FAILED!")
-endif()
-
-# --- INSTALL ---
+# --- BUILD + INSTALL ---
 
 ctest_build(TARGET install RETURN_VALUE res)
 
 if (res)
-  message("INSTALL FAILED! (NON-FATAL)")
+  message(FATAL_ERROR "BUILD + INSTALL FAILED!")
 endif()
-
 
 # --- TEST ---
 
