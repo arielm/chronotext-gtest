@@ -40,7 +40,7 @@ set(CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET})
 set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
 
-if (PROJECT_NAME STREQUAL "CMAKE_TRY_COMPILE")
+if (PROJECT_NAME STREQUAL CMAKE_TRY_COMPILE)
   set(MACOSX_BUNDLE_GUI_IDENTIFIER foo.tmp)
   set(MACOSX_BUNDLE_EXECUTABLE_NAME tmp)
 
@@ -54,6 +54,14 @@ endif()
 
 if (DEFINED RUN)
   if (NOT PROJECT_NAME STREQUAL CMAKE_TRY_COMPILE)
-    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/ios.sh.in run)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/ios/run.sh.in run.sh)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/ios/install.sh.in install.sh)
+
+    install(CODE "
+      execute_process(COMMAND ./install.sh RESULT_VARIABLE result)
+      if (result)
+        message(FATAL_ERROR)
+      endif()
+    ")
   endif()
 endif()

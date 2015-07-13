@@ -1,0 +1,3 @@
+#!/bin/sh
+
+adb push ${PROJECT_NAME} /data/local/tmp/

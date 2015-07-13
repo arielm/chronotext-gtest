@@ -22,6 +22,14 @@ include("$ENV{MXE_PATH}/usr/${MXE_TARGET}/share/cmake/mxe-conf.cmake")
 
 if (DEFINED RUN)
   if (NOT PROJECT_NAME STREQUAL CMAKE_TRY_COMPILE)
-    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/mxe.sh.in run)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/mxe/run.sh.in run.sh)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/install.nop.sh.in install.sh)
+
+    install(CODE "
+      execute_process(COMMAND ./install.sh RESULT_VARIABLE result)
+      if (result)
+        message(FATAL_ERROR)
+      endif()
+    ")
   endif()
 endif()

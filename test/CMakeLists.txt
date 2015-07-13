@@ -13,7 +13,7 @@ add_executable(TestGTest
 target_link_libraries(TestGTest ${GTEST_BOTH_LIBRARIES})
 
 enable_testing()
-add_test(NAME AllTests COMMAND run)
+add_test(NAME AllTests COMMAND ./run.sh)
 
-#add_test(NAME MessageTest  COMMAND run --gtest_filter=MessageTest.*)
-#add_test(NAME PrintersTest COMMAND run --gtest_filter=Print*Test.*)
+#add_test(NAME MessageTest  COMMAND ./run.sh --gtest_filter=MessageTest.*)
+#add_test(NAME PrintersTest COMMAND ./run.sh --gtest_filter=Print*Test.*)

@@ -25,6 +25,14 @@ set(CMAKE_CXX_FLAGS "-mmacosx-version-min=${OSX_DEPLOYMENT_TARGET} -stdlib=libc+
 
 if (DEFINED RUN)
   if (NOT PROJECT_NAME STREQUAL CMAKE_TRY_COMPILE)
-    configure_file(${CMAKE_CURRENT_LIST_DIR}/run/osx.sh.in run)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/osx/run.sh.in run.sh)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/install.nop.sh.in install.sh)
+
+    install(CODE "
+      execute_process(COMMAND ./install.sh RESULT_VARIABLE result)
+      if (result)
+        message(FATAL_ERROR)
+      endif()
+    ")
   endif()
 endif()

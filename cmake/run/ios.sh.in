@@ -1,8 +1,0 @@
-#!/bin/sh
-
-APP=${CMAKE_BUILD_TYPE}-${CMAKE_OSX_SYSROOT}/${PROJECT_NAME}.app
-
-if [ $# -eq 0 ];
-  then ios-deploy --noninteractive --debug --bundle $APP
-  else ios-deploy --noninteractive --debug --bundle $APP --args "$@"
-fi
